@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cronograma de Estudos — Técnico do Seguro Social (INSS)</title>
+<style>
+  :root{
+    --roxo-deep: #3B1F5C;
+    --roxo: #5B2E8C;
+    --roxo-soft: #8B5FBF;
+    --roxo-pale: #EFE4FA;
+    --dourado: #F0B429;
+    --dourado-deep: #D69412;
+    --dourado-pale: #FDF3DC;
+    --verde: #4E9A5C;
+    --verde-pale: #E4F3E6;
+    --branco: #FFFDF8;
+    --ink: #372850;
+    --font-display: 'Fraunces', 'Georgia', serif;
+    --font-sans: 'Quicksand', 'IBM Plex Sans', Arial, sans-serif;
+  }
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,700;1,500&family=Quicksand:wght@400;500;600;700&display=swap');
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(circle at 15% 8%, rgba(240,180,41,0.16), transparent 40%),
+      radial-gradient(circle at 90% 20%, rgba(78,154,92,0.12), transparent 38%),
+      var(--branco);
+    color:var(--ink);
+    font-family:var(--font-sans);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .sol{width:64px;height:64px;flex-shrink:0;}
+
+  header.capa{
+    background: linear-gradient(160deg, var(--roxo-deep) 0%, var(--roxo) 62%, var(--roxo-soft) 100%);
+    color:var(--branco);
+    padding:44px 24px 54px;
+    position:relative;
+    overflow:hidden;
+    border-bottom:8px solid var(--dourado);
+  }
+  header.capa::before{
+    content:"";
+    position:absolute;
+    top:-60px; right:-60px;
+    width:260px;height:260px;
+    background:radial-gradient(circle, rgba(240,180,41,0.35) 0%, transparent 70%);
+  }
+  header.capa::after{
+    content:"";
+    position:absolute;
+    bottom:-90px; left:-40px;
+    width:220px;height:220px;
+    background:radial-gradient(circle, rgba(78,154,92,0.30) 0%, transparent 70%);
+  }
+  .capa-inner{
+    max-width:960px;
+    margin:0 auto;
+    position:relative;
+    display:flex;
+    align-items:center;
+    gap:20px;
+  }
+  .capa-texto{flex:1;min-width:0;}
+  .selo{
+    font-family:var(--font-sans);
+    font-weight:600;
+    font-size:12.5px;
+    letter-spacing:.02em;
+    color:var(--dourado);
+    margin-bottom:12px;
+    display:flex;
+    gap:18px;
+    flex-wrap:wrap;
+  }
+  .selo span b{color:#FFF3D0;font-weight:700;}
+  h1{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:clamp(30px,4.6vw,46px);
+    margin:0 0 10px;
+    line-height:1.12;
+    color:#FFFFFF;
+  }
+  header.capa p.sub{
+    font-family:var(--font-sans);
+    font-weight:500;
+    font-size:16px;
+    color:#E9DCF7;
+    max-width:60ch;
+    margin:0;
+  }
+
+  .stats{
+    max-width:960px;
+    margin:-30px auto 0;
+    padding:0 24px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:14px;
+    position:relative;
+    z-index:2;
+  }
+  .stat{
+    background:var(--branco);
+    padding:18px 16px;
+    text-align:left;
+    border-radius:16px;
+    border:2px solid var(--dourado-pale);
+    box-shadow:0 8px 20px rgba(91,46,140,0.10);
+  }
+  .stat .n{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:28px;
+    color:var(--roxo);
+    display:block;
+  }
+  .stat .l{font-size:12.5px;color:#7A6B94;font-weight:500;}
+
+  main{max-width:960px;margin:0 auto;padding:50px 24px 80px;}
+
+  h2.titulo{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:24px;
+    color:var(--roxo-deep);
+    margin:56px 0 16px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  h2.titulo:first-of-type{margin-top:0;}
+  h2.titulo .flor{width:26px;height:26px;flex-shrink:0;}
+  p.lede{color:#6B5C87;max-width:66ch;margin:0 0 26px;font-size:15px;}
+
+  .disciplinas{display:grid;grid-template-columns:1fr;gap:10px;}
+  .disc{
+    display:grid;
+    grid-template-columns:150px 1fr 76px;
+    gap:16px;
+    align-items:center;
+    padding:14px 18px;
+    background:var(--branco);
+    border:2px solid var(--roxo-pale);
+    border-radius:14px;
+  }
+  .disc .nome{font-weight:600;font-size:14px;color:var(--ink);}
+  .disc .barra{height:10px;background:var(--roxo-pale);position:relative;border-radius:6px;overflow:hidden;}
+  .disc .barra i{display:block;height:100%;background:linear-gradient(90deg, var(--verde), var(--dourado));border-radius:6px;}
+  .disc.forte .barra i{background:linear-gradient(90deg, var(--roxo), var(--dourado));}
+  .disc .peso{font-weight:600;font-size:12px;text-align:right;color:var(--roxo-soft);}
+
+  .fase-tabs{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:22px;}
+  .fase-tab{
+    font-family:var(--font-sans);
+    font-size:14px;
+    font-weight:600;
+    padding:10px 18px;
+    background:var(--roxo-pale);
+    border:2px solid transparent;
+    color:var(--roxo);
+    cursor:pointer;
+    border-radius:999px;
+    transition:all .18s ease;
+  }
+  .fase-tab:hover{background:#e2cff5;}
+  .fase-tab.active{background:var(--roxo);color:#FFF;box-shadow:0 6px 14px rgba(91,46,140,0.28);}
+
+  .fase-panel{display:none;}
+  .fase-panel.active{display:block;}
+
+  .fase-meta{
+    display:flex;
+    gap:22px;
+    flex-wrap:wrap;
+    font-size:13.5px;
+    color:#7A6B94;
+    margin-bottom:20px;
+    padding:12px 18px;
+    background:var(--verde-pale);
+    border-radius:12px;
+    border:1px dashed var(--verde);
+  }
+  .fase-meta b{color:var(--roxo-deep);}
+
+  .semana{
+    margin-bottom:20px;
+    background:var(--branco);
+    border:2px solid var(--dourado-pale);
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 6px 18px rgba(91,46,140,0.06);
+  }
+  .semana-head{
+    background:linear-gradient(90deg, var(--dourado-pale), #FFFDF8);
+    padding:12px 20px;
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:16px;
+    color:var(--roxo-deep);
+    border-bottom:2px solid var(--dourado-pale);
+  }
+  table.dias{width:100%;border-collapse:collapse;font-size:14px;}
+  table.dias tr:not(:last-child) td{border-bottom:1px solid #F3ECFB;}
+  table.dias td{padding:12px 18px;vertical-align:top;}
+  td.dia{
+    width:96px;
+    font-family:var(--font-sans);
+    font-size:12px;
+    letter-spacing:.03em;
+    color:var(--verde);
+    font-weight:700;
+    padding-top:14px;
+    white-space:nowrap;
+  }
+  td.dia.folga{color:#B7A9CE;}
+  td.materia b{color:var(--ink);}
+  td.materia .tag{
+    display:inline-block;
+    font-family:var(--font-sans);
+    font-size:10.5px;
+    font-weight:700;
+    background:var(--verde);
+    color:#fff;
+    padding:3px 9px;
+    border-radius:999px;
+    margin-right:8px;
+    vertical-align:middle;
+    letter-spacing:.02em;
+  }
+  td.materia .tag.rev{background:var(--dourado-deep);}
+  td.materia .tag.folga-tag{background:#C7B9DC;}
+  .check{width:40px;text-align:center;}
+  .check input{width:19px;height:19px;accent-color:var(--roxo);cursor:pointer;}
+  tr.done td.materia{opacity:.4;text-decoration:line-through;}
+
+  .nota{
+    background:var(--roxo-pale);
+    border:2px dashed var(--roxo-soft);
+    border-radius:16px;
+    padding:18px 22px;
+    font-size:14px;
+    color:var(--roxo-deep);
+    margin-top:30px;
+  }
+  .nota b{color:var(--roxo-deep);}
+
+  footer{
+    max-width:960px;
+    margin:0 auto;
+    padding:0 24px 60px;
+    font-size:12.5px;
+    color:#B7A9CE;
+    font-weight:600;
+    text-align:center;
+  }
+
+  @media (max-width:640px){
+    .stats{grid-template-columns:repeat(2,1fr);}
+    .disc{grid-template-columns:104px 1fr 54px;gap:10px;}
+    td.dia{width:70px;font-size:10.5px;}
+    .capa-inner{gap:12px;}
+    .sol{width:44px;height:44px;}
+  }
+</style>
+</head>
+<body>
+
+<header class="capa">
+  <div class="capa-inner">
+    <svg class="sol" viewBox="0 0 100 100" fill="none">
+      <g stroke="#F0B429" stroke-width="4" stroke-linecap="round">
+        <line x1="50" y1="2" x2="50" y2="16"/>
+        <line x1="50" y1="84" x2="50" y2="98"/>
+        <line x1="2" y1="50" x2="16" y2="50"/>
+        <line x1="84" y1="50" x2="98" y2="50"/>
+        <line x1="16" y1="16" x2="26" y2="26"/>
+        <line x1="74" y1="74" x2="84" y2="84"/>
+        <line x1="84" y1="16" x2="74" y2="26"/>
+        <line x1="26" y1="74" x2="16" y2="84"/>
+      </g>
+      <circle cx="50" cy="50" r="24" fill="#F0B429"/>
+      <circle cx="50" cy="50" r="24" fill="none" stroke="#FFFDF8" stroke-width="2"/>
+    </svg>
+    <div class="capa-texto">
+      <div class="selo">
+        <span>CONCURSO: <b>INSS — Técnico do Seguro Social</b></span>
+        <span>BASE: <b>Edital nº 1/2022</b></span>
+        <span>CARGA: <b>1–2h / dia</b></span>
+      </div>
+      <h1>Cronograma de Estudos</h1>
+      <p class="sub">Como o novo edital ainda não saiu, este plano segue o conteúdo do último concurso (2022). Assim que sair o edital novo, é só conferir se alguma disciplina mudou.</p>
+    </div>
+  </div>
+</header>
+
+<div class="stats">
+  <div class="stat"><span class="n">7</span><span class="l">disciplinas no edital</span></div>
+  <div class="stat"><span class="n">4</span><span class="l">fases de estudo</span></div>
+  <div class="stat"><span class="n">12</span><span class="l">semanas até a revisão geral</span></div>
+  <div class="stat"><span class="n">6</span><span class="l">dias de estudo por semana</span></div>
+</div>
+
+<main>
+
+  <h2 class="titulo">
+    <svg class="flor" viewBox="0 0 40 40"><g fill="#4E9A5C"><circle cx="20" cy="10" r="7"/><circle cx="30" cy="20" r="7"/><circle cx="20" cy="30" r="7"/><circle cx="10" cy="20" r="7"/></g><circle cx="20" cy="20" r="6" fill="#F0B429"/></svg>
+    Onde a prova pesa mais
+  </h2>
+  <p class="lede">Pra quem tá começando do zero e tem pouco tempo por dia, o segredo é não estudar tudo igual. Direito Previdenciário é o bloco mais extenso e mais decisivo — é nele que a maioria passa ou reprova. Por isso ele aparece mais vezes por semana no cronograma abaixo.</p>
+
+  <div class="disciplinas">
+    <div class="disc forte"><span class="nome">Direito Previdenciário</span><span class="barra"><i style="width:90%"></i></span><span class="peso">peso alto</span></div>
+    <div class="disc"><span class="nome">Língua Portuguesa</span><span class="barra"><i style="width:60%"></i></span><span class="peso">peso médio</span></div>
+    <div class="disc"><span class="nome">Raciocínio Lógico</span><span class="barra"><i style="width:45%"></i></span><span class="peso">peso médio</span></div>
+    <div class="disc"><span class="nome">Dir. Constitucional</span><span class="barra"><i style="width:40%"></i></span><span class="peso">peso médio</span></div>
+    <div class="disc"><span class="nome">Dir. Administrativo</span><span class="barra"><i style="width:35%"></i></span><span class="peso">peso baixo</span></div>
+    <div class="disc"><span class="nome">Ética no Serviço Público</span><span class="barra"><i style="width:20%"></i></span><span class="peso">peso baixo</span></div>
+    <div class="disc"><span class="nome">Informática</span><span class="barra"><i style="width:20%"></i></span><span class="peso">peso baixo</span></div>
+  </div>
+
+  <h2 class="titulo">
+    <svg class="flor" viewBox="0 0 40 40"><g fill="#F0B429"><circle cx="20" cy="10" r="7"/><circle cx="30" cy="20" r="7"/><circle cx="20" cy="30" r="7"/><circle cx="10" cy="20" r="7"/></g><circle cx="20" cy="20" r="6" fill="#5B2E8C"/></svg>
+    As 4 fases do plano
+  </h2>
+  <p class="lede">O plano é cíclico: depois da semana 12, você volta pro início revisando com banco de questões, reforçando só onde ainda errar. Clique nas fases pra ver a semana a semana.</p>
+
+  <div class="fase-tabs">
+    <button class="fase-tab active" data-fase="1">Fase 1 — Base</button>
+    <button class="fase-tab" data-fase="2">Fase 2 — Previdenciário I</button>
+    <button class="fase-tab" data-fase="3">Fase 3 — Previdenciário II</button>
+    <button class="fase-tab" data-fase="4">Fase 4 — Complementares</button>
+  </div>
+
+  <div class="fase-panel active" id="fase-1">
+    <div class="fase-meta">
+      <span><b>Semanas 1–3</b></span>
+      <span>Foco: pegar o alicerce antes de entrar na lei seca pesada</span>
+    </div>
+
+    <div class="semana">
+      <div class="semana-head">Semana 1</div>
+      <table class="dias"><tbody>
+        <tr><td class="dia">SEG</td><td class="materia"><span class="tag">PORT.</span><b>Interpretação de texto</b> — leia 1 texto curto e resuma em 3 linhas</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">TER</td><td class="materia"><span class="tag">CONST.</span><b>Direitos e garantias fundamentais</b> (art. 5º da CF)</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">QUA</td><td class="materia"><span class="tag">PORT.</span><b>Ortografia e acentuação gráfica</b></td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">QUI</td><td class="materia"><span class="tag">RLM</span><b>Lógica proposicional</b> — proposições, conectivos (e/ou/se-então)</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">SEX</td><td class="materia"><span class="tag">CONST.</span><b>Administração pública</b> (arts. 37 a 41 da CF)</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">SAB</td><td class="materia"><span class="tag rev">REV.</span><b>Revisão</b> — releia suas anotações da semana e faça 10 questões</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia folga">DOM</td><td class="materia"><span class="tag folga-tag">LIVRE</span>Descanso</td><td class="check"></td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="semana">
+      <div class="semana-head">Semana 2</div>
+      <table class="dias"><tbody>
+        <tr><td class="dia">SEG</td><td class="materia"><span class="tag">PORT.</span><b>Classes de palavras</b> — emprego e flexões</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">TER</td><td class="materia"><span class="tag">CONST.</span><b>Direitos sociais e cidadania</b></td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">QUA</td><td class="materia"><span class="tag">PORT.</span><b>Concordância verbal e nominal</b></td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">QUI</td><td class="materia"><span class="tag">RLM</span><b>Tabelas-verdade e equivalências lógicas</b></td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">SEX</td><td class="materia"><span class="tag">ÉTICA</span><b>Decreto nº 1.171/1994</b> — código de ética do servidor</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">SAB</td><td class="materia"><span class="tag rev">REV.</span><b>Revisão</b> + 10 questões de Constitucional</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia folga">DOM</td><td class="materia"><span class="tag folga-tag">LIVRE</span>Descanso</td><td class="check"></td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="semana">
+      <div class="semana-head">Semana 3</div>
+      <table class="dias"><tbody>
+        <tr><td class="dia">SEG</td><td class="materia"><span class="tag">PORT.</span><b>Regência nominal e verbal</b> + crase</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">TER</td><td class="materia"><span class="tag">ADM.</span><b>Estado, governo e administração pública</b> — conceitos e princípios</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">QUA</td><td class="materia"><span class="tag">PORT.</span><b>Pontuação e sintaxe do período</b></td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">QUI</td><td class="materia"><span class="tag">RLM</span><b>Estruturas lógicas</b> e argumentação</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">SEX</td><td class="materia"><span class="tag">ADM.</span><b>Administração direta e indireta</b></td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">SAB</td><td class="materia"><span class="tag rev">REV.</span><b>Revisão geral da Fase 1</b> + simulado curto (20 questões)</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia folga">DOM</td><td class="materia"><span class="tag folga-tag">LIVRE</span>Descanso</td><td class="check"></td></tr>
+      </tbody></table>
+    </div>
+  </div>
+
+  <div class="fase-panel" id="fase-2">
+    <div class="fase-meta">
+      <span><b>Semanas 4–7</b></span>
+      <span>Foco: o coração da prova — Seguridade Social e a Lei 8.213/1991</span>
+    </div>
+
+    <div class="semana">
+      <div class="semana-head">Semana 4</div>
+      <table class="dias"><tbody>
+        <tr><td class="dia">SEG</td><td class="materia"><span class="tag">PREV.</span><b>Seguridade Social</b> — conceito, saúde, assistência e previdência (CF, arts. 194–195)</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">TER</td><td class="materia"><span class="tag">PORT.</span><b>Redação de correspondências oficiais</b> (Manual da Presidência)</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">QUA</td><td class="materia"><span class="tag">PREV.</span><b>RGPS</b> — quem são os segurados obrigatórios e facultativos</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">QUI</td><td class="materia"><span class="tag">RLM</span><b>Questões de concurso</b> — Cebraspe, banco de 15 exercícios</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">SEX</td><td class="materia"><span class="tag">PREV.</span><b>Carência</b> — o que é e quais benefícios exigem</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">SAB</td><td class="materia"><span class="tag rev">REV.</span><b>Revisão</b> + mapa mental dos segurados do RGPS</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia folga">DOM</td><td class="materia"><span class="tag folga-tag">LIVRE</span>Descanso</td><td class="check"></td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="semana">
+      <div class="semana-head">Semana 5</div>
+      <table class="dias"><tbody>
+        <tr><td class="dia">SEG</td><td class="materia"><span class="tag">PREV.</span><b>Lei 8.213/1991</b> — aposentadoria por idade e por tempo de contribuição</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">TER</td><td class="materia"><span class="tag">PORT.</span><b>Significação das palavras</b> — sinônimos, antônimos, ambiguidade</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">QUA</td><td class="materia"><span class="tag">PREV.</span><b>Lei 8.213/1991</b> — aposentadoria por invalidez e especial</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">QUI</td><td class="materia"><span class="tag">RLM</span><b>Diagramas lógicos e conjuntos</b></td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">SEX</td><td class="materia"><span class="tag">PREV.</span><b>Auxílio-doença e auxílio-acidente</b></td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">SAB</td><td class="materia"><span class="tag rev">REV.</span><b>Revisão</b> + questões sobre os benefícios vistos</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia folga">DOM</td><td class="materia"><span class="tag folga-tag">LIVRE</span>Descanso</td><td class="check"></td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="semana">
+      <div class="semana-head">Semana 6</div>
+      <table class="dias"><tbody>
+        <tr><td class="dia">SEG</td><td class="materia"><span class="tag">PREV.</span><b>Salário-maternidade e salário-família</b></td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">TER</td><td class="materia"><span class="tag">PORT.</span><b>Tipologia textual</b> — narração, dissertação, descrição</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">QUA</td><td class="materia"><span class="tag">PREV.</span><b>Pensão por morte</b> e dependentes do segurado</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">QUI</td><td class="materia"><span class="tag">RLM</span><b>Sequências lógicas e problemas de raciocínio</b></td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">SEX</td><td class="materia"><span class="tag">PREV.</span><b>Auxílio-reclusão</b> e reabilitação profissional</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">SAB</td><td class="materia"><span class="tag rev">REV.</span><b>Revisão</b> + simulado de 15 questões só de benefícios</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia folga">DOM</td><td class="materia"><span class="tag folga-tag">LIVRE</span>Descanso</td><td class="check"></td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="semana">
+      <div class="semana-head">Semana 7</div>
+      <table class="dias"><tbody>
+        <tr><td class="dia">SEG</td><td class="materia"><span class="tag">PREV.</span><b>Serviços previdenciários</b> e seguro-desemprego do pescador artesanal</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">TER</td><td class="materia"><span class="tag">PORT.</span><b>Reescrita de frases</b> — sem mudar o sentido</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">QUA</td><td class="materia"><span class="tag">PREV.</span><b>Cálculo da renda mensal do benefício</b> (noções gerais)</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">QUI</td><td class="materia"><span class="tag">RLM</span><b>Banco de questões</b> — 15 exercícios cronometrados</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">SEX</td><td class="materia"><span class="tag">PREV.</span><b>Revisão geral</b> da Lei 8.213/1991 com mapa mental</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">SAB</td><td class="materia"><span class="tag rev">REV.</span><b>Simulado da Fase 2</b> — 25 questões (Português + Previdenciário)</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia folga">DOM</td><td class="materia"><span class="tag folga-tag">LIVRE</span>Descanso</td><td class="check"></td></tr>
+      </tbody></table>
+    </div>
+  </div>
+
+  <div class="fase-panel" id="fase-3">
+    <div class="fase-meta">
+      <span><b>Semanas 8–10</b></span>
+      <span>Foco: custeio, reforma da previdência e assistência social</span>
+    </div>
+
+    <div class="semana">
+      <div class="semana-head">Semana 8</div>
+      <table class="dias"><tbody>
+        <tr><td class="dia">SEG</td><td class="materia"><span class="tag">PREV.</span><b>Lei 8.212/1991</b> — financiamento da Seguridade Social</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">TER</td><td class="materia"><span class="tag">PORT.</span><b>Revisão geral de gramática</b> — pontos que você mais errou</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">QUA</td><td class="materia"><span class="tag">PREV.</span><b>Lei 8.212/1991</b> — contribuintes e fontes de custeio</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">QUI</td><td class="materia"><span class="tag">RLM</span><b>Revisão geral</b> de lógica com questões variadas</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">SEX</td><td class="materia"><span class="tag">PREV.</span><b>EC nº 103/2019</b> — o que mudou na reforma da previdência</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">SAB</td><td class="materia"><span class="tag rev">REV.</span><b>Revisão</b> + questões de custeio</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia folga">DOM</td><td class="materia"><span class="tag folga-tag">LIVRE</span>Descanso</td><td class="check"></td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="semana">
+      <div class="semana-head">Semana 9</div>
+      <table class="dias"><tbody>
+        <tr><td class="dia">SEG</td><td class="materia"><span class="tag">PREV.</span><b>LC nº 142/2013</b> — aposentadoria da pessoa com deficiência</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">TER</td><td class="materia"><span class="tag">CONST.</span><b>Revisão</b> de direitos e garantias fundamentais</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">QUA</td><td class="materia"><span class="tag">PREV.</span><b>LOAS (Lei 8.742/1993)</b> — Benefício de Prestação Continuada (BPC)</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">QUI</td><td class="materia"><span class="tag">INFO</span><b>Conceitos de internet e intranet</b>, navegadores e e-mail</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">SEX</td><td class="materia"><span class="tag">PREV.</span><b>Auxílio-Inclusão</b> (Lei 14.176/2021) e Decreto 6.214/2007</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">SAB</td><td class="materia"><span class="tag rev">REV.</span><b>Revisão</b> + questões de BPC/LOAS</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia folga">DOM</td><td class="materia"><span class="tag folga-tag">LIVRE</span>Descanso</td><td class="check"></td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="semana">
+      <div class="semana-head">Semana 10</div>
+      <table class="dias"><tbody>
+        <tr><td class="dia">SEG</td><td class="materia"><span class="tag">PREV.</span><b>Regimes Próprios de Previdência</b> — certidão de tempo de contribuição</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">TER</td><td class="materia"><span class="tag">ADM.</span><b>Revisão</b> de agentes públicos e poderes administrativos</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">QUA</td><td class="materia"><span class="tag">PREV.</span><b>Contagem recíproca</b> e compensação previdenciária</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">QUI</td><td class="materia"><span class="tag">INFO</span><b>Word, Excel e PowerPoint</b> — funções básicas cobradas em prova</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">SEX</td><td class="materia"><span class="tag">PREV.</span><b>Revisão geral</b> da Fase 3 com mapa mental de leis</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">SAB</td><td class="materia"><span class="tag rev">REV.</span><b>Simulado da Fase 3</b> — 25 questões</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia folga">DOM</td><td class="materia"><span class="tag folga-tag">LIVRE</span>Descanso</td><td class="check"></td></tr>
+      </tbody></table>
+    </div>
+  </div>
+
+  <div class="fase-panel" id="fase-4">
+    <div class="fase-meta">
+      <span><b>Semanas 11–12</b></span>
+      <span>Foco: fechar as disciplinas de peso baixo e entrar no ciclo de revisão</span>
+    </div>
+
+    <div class="semana">
+      <div class="semana-head">Semana 11</div>
+      <table class="dias"><tbody>
+        <tr><td class="dia">SEG</td><td class="materia"><span class="tag">ADM.</span><b>Direito administrativo</b> — conceito, fontes e princípios</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">TER</td><td class="materia"><span class="tag">ÉTICA</span><b>Decreto nº 6.029/2007</b> — sistema de gestão da ética</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">QUA</td><td class="materia"><span class="tag">ADM.</span><b>Cargo, emprego e função pública</b></td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">QUI</td><td class="materia"><span class="tag">INFO</span><b>Windows 10</b> — noções básicas e segurança (vírus, worms)</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">SEX</td><td class="materia"><span class="tag">PREV.</span><b>Revisão</b> — pontos da Seguridade Social que você mais errou</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">SAB</td><td class="materia"><span class="tag rev">REV.</span><b>Revisão</b> + questões de Administrativo e Ética</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia folga">DOM</td><td class="materia"><span class="tag folga-tag">LIVRE</span>Descanso</td><td class="check"></td></tr>
+      </tbody></table>
+    </div>
+
+    <div class="semana">
+      <div class="semana-head">Semana 12 — Revisão geral</div>
+      <table class="dias"><tbody>
+        <tr><td class="dia">SEG</td><td class="materia"><span class="tag rev">REV.</span><b>Revisão</b> — Português + Raciocínio Lógico</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">TER</td><td class="materia"><span class="tag rev">REV.</span><b>Revisão</b> — Constitucional + Administrativo + Ética</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">QUA</td><td class="materia"><span class="tag rev">REV.</span><b>Revisão</b> — Seguridade Social (parte 1: benefícios)</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">QUI</td><td class="materia"><span class="tag rev">REV.</span><b>Revisão</b> — Seguridade Social (parte 2: custeio e reforma)</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">SEX</td><td class="materia"><span class="tag rev">REV.</span><b>Revisão</b> — Informática + LOAS/BPC</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia">SAB</td><td class="materia"><span class="tag rev">REV.</span><b>Simulado completo</b> — todas as disciplinas (50 questões)</td><td class="check"><input type="checkbox"></td></tr>
+        <tr><td class="dia folga">DOM</td><td class="materia"><span class="tag folga-tag">LIVRE</span>Descanso — depois volte pra Fase 1 focando só no que errou</td><td class="check"></td></tr>
+      </tbody></table>
+    </div>
+  </div>
+
+  <div class="nota">
+    <b>Depois da semana 12:</b> volte ao início do ciclo, mas em modo revisão — pule direto pras questões de cada tema e só pare mais tempo onde errar. Repita até o edital sair. Quando sair, confira o conteúdo programático oficial: pode ter mudanças pequenas (por exemplo, atualizações de leis ou troca de alguma disciplina).
+  </div>
+
+</main>
+
+<footer>✦ CRONOGRAMA DE ESTUDOS — SEU PROGRESSO FICA SALVO NESTE NAVEGADOR ✦</footer>
+
+<script>
+  const tabs = document.querySelectorAll('.fase-tab');
+  const panels = document.querySelectorAll('.fase-panel');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('fase-' + tab.dataset.fase).classList.add('active');
+    });
+  });
+
+  const boxes = document.querySelectorAll('table.dias input[type="checkbox"]');
+  boxes.forEach((box, i) => {
+    const key = 'inss-cronograma-' + i;
+    const row = box.closest('tr');
+    if (localStorage.getItem(key) === '1') {
+      box.checked = true;
+      row.classList.add('done');
+    }
+    box.addEventListener('change', () => {
+      localStorage.setItem(key, box.checked ? '1' : '0');
+      row.classList.toggle('done', box.checked);
+    });
+  });
+</script>
+
+</body>
+</html>
